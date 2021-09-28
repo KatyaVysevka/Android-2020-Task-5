@@ -1,6 +1,5 @@
 package com.example.task5.fragments
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -38,7 +37,7 @@ class CatAdapter:PagingDataAdapter <CatPhoto, CatAdapter.PhotoViewHolder> (PHOTO
                     .error(R.drawable.ic_baseline_error_24)
                     .into(imageCat)
 
-                textViewCat.text = photo.breeds[0].name ?: "Lovely Cat"
+                textViewCat.text = photo.breeds.firstOrNull()?.name ?: "Lovely Cat"
             }
 
         }

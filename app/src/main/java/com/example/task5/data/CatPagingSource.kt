@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.task5.api.CatApi
-import okhttp3.OkHttpClient
-import retrofit2.HttpException
 import java.io.IOException
-import java.util.concurrent.TimeUnit
+import retrofit2.HttpException
 
 private const val STARTING_PAGE_INDEX = 1
 private const val CATS_ORDER = "ASC"
@@ -18,9 +16,8 @@ class CatPagingSource(private val catApi: CatApi):PagingSource<Int,CatPhoto>() {
         val position = params.key ?: STARTING_PAGE_INDEX
 
         return try {
-            val response = catApi.catPhotos(CATS_ORDER, position, params.loadSize)
-            Log.d("MyLog", response.toString())
-            val photo = response.results
+            val photo = catApi.catPhotos(CATS_ORDER, position, params.loadSize)
+            Log.d("MyLog", photo.toString())
             LoadResult.Page(
                 data = photo,
                 prevKey = if (position == STARTING_PAGE_INDEX) null else position - 1,
