@@ -1,14 +1,12 @@
 package com.example.task5.fragments
 
-import androidx.lifecycle.*
-import androidx.paging.PagingData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.task5.data.CatPhoto
 import com.example.task5.data.CatRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.concurrent.Flow
 import javax.inject.Inject
 
 
@@ -22,11 +20,6 @@ class GalleryViewModel @Inject constructor(private val repository: CatRepository
 //        }
 //    }
     private val currentQuery = MutableLiveData<CatPhoto>()
-    val photos = currentQuery.switchMap {
-
-        repository.getResults().cachedIn(viewModelScope)
-    }
-
-
+    val photos = repository.getResults().cachedIn(viewModelScope)
 
 }
