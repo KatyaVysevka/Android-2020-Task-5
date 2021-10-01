@@ -1,10 +1,16 @@
 package com.example.task5.fragments.detail
 
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -15,13 +21,22 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.task5.R
+import com.example.task5.data.CatPhoto
 import com.example.task5.databinding.FragmentDetailBinding
+import com.example.task5.storage.sdk29AndUp
+import java.io.IOException
+import java.util.jar.Manifest
 
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding: FragmentDetailBinding get() = requireNotNull(_binding)
     private val ags by navArgs<DetailFragmentArgs>()
+
+    private var readPermissionGranted = false
+    private var writePermissionGranted = false
+    private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +44,7 @@ class DetailFragment : Fragment() {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,15 +73,15 @@ class DetailFragment : Fragment() {
                         isFirstResource: Boolean
                     ): Boolean {
                         progressBar.isVisible = false
-                        textViewCreator.isVisible = true
-                      //  textViewDescription.isVisible = photo != null
+
+                        //  textViewDescription.isVisible = photo != null
                         return false
                     }
 
                 })
                 .into(imageView)
 
-          //  textViewDescription.text = photo.description
+            //  textViewDescription.text = photo.description
 
 //            val uri = Uri.parse(photo.breeds.attributionUrl)
 //            val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -82,12 +98,13 @@ class DetailFragment : Fragment() {
         //add menu
         setHasOptionsMenu(true)
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.save_menu , menu)
+        inflater.inflate(R.menu.save_menu, menu)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        when (item.itemId) {
 //            R.id.menu_filter ->
 //                findNavController().navigate(R.id.action_listFragment_to_filterFragment)
@@ -95,6 +112,61 @@ class DetailFragment : Fragment() {
 //        }
 //
 //        return super.onOptionsItemSelected(item)
+//    }
+    private fun updateOrRequestPermissions() {
+        val hasReadPermission = ContextCompat.checkSelfPermission(
+            requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val hasWritePermission = ContextCompat.checkSelfPermission(
+            requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+
+        readPermissionGranted = hasReadPermission
+        writePermissionGranted = hasWritePermission || minSdk29
+
+        val permissionsToRequest = mutableListOf<String>()
+
+        if (!writePermissionGranted) {
+            permissionsToRequest.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
+        if (!readPermissionGranted){
+            permissionsToRequest.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (permissionsToRequest.isNotEmpty()){
+            permissionsLauncher.launch(permissionsToRequest.toTypedArray())
+        }
+    }
+
+//    private fun savePhotoToExternalStorage(catPhoto: CatPhoto): Boolean {
+//        val imageCollection = sdk29AndUp {
+//            MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+//        } ?: MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//
+//        val contentValues = ContentValues().apply {
+//            put (MediaStore.Images.Media.DISPLAY_NAME, "${catPhoto.id}")
+//            put (MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+//            put (MediaStore.Images.Media.WIDTH, catPhoto.width)
+//            put (MediaStore.Images.Media.HEIGHT, catPhoto.height)
+//        }
+//
+//        return try {
+//            requireActivity().contentResolver.insert(imageCollection,ContentValues)?.also {
+//                uri ->
+//                requireActivity().contentResolver.openOutputStream(uri).use {outputStream ->
+//
+//                    if()
+//                }
+//            }
+//        } catch (exception: IOException) {
+//            exception.printStackTrace()
+//            false
+//        }
+//
 //    }
 
     override fun onDestroy() {
