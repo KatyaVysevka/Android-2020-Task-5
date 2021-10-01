@@ -1,4 +1,4 @@
-package com.example.task5.fragments
+package com.example.task5.fragments.gallery
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

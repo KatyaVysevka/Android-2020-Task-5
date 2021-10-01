@@ -6,7 +6,20 @@
     app:startDestination="@id/galleryFragment">
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="com.example.task5.fragments.GalleryFragment"
-        android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.example.task5.fragments.gallery.GalleryFragment"
+        android:label="Cat gallery"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_galleryFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.task5.fragments.detail.DetailFragment"
+        android:label="Photo"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="detailPhoto"
+            app:argType="com.example.task5.data.CatPhoto" />
+    </fragment>
 </navigation>

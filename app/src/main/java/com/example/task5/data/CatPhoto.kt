@@ -11,7 +11,8 @@ data class CatPhoto(
     @SerializedName("id") var id : String,
     @SerializedName("url") var url : String,
     @SerializedName("width") var width : Int
-): Parcelable {
+): Parcelable
+
     @Parcelize
     data class Weight(
         @SerializedName("imperial") var imperial: String,
@@ -59,4 +60,4 @@ data class CatPhoto(
         @SerializedName("wikipedia_url") var wikipediaUrl: String
 
     ): Parcelable
-}
+

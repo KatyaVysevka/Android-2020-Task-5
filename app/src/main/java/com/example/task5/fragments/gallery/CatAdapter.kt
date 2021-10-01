@@ -1,4 +1,4 @@
-package com.example.task5.fragments
+package com.example.task5.fragments.gallery
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.example.task5.R
 import com.example.task5.data.CatPhoto
 import com.example.task5.databinding.ItemBinding
 
-class CatAdapter:PagingDataAdapter <CatPhoto, CatAdapter.PhotoViewHolder> (PHOTO_COMPARATOR){
+class CatAdapter(private val listener: OnItemClickListener):PagingDataAdapter <CatPhoto, CatAdapter.PhotoViewHolder> (PHOTO_COMPARATOR){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = ItemBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
@@ -25,8 +25,21 @@ class CatAdapter:PagingDataAdapter <CatPhoto, CatAdapter.PhotoViewHolder> (PHOTO
         if (currentItem != null) holder.bind(currentItem)
     }
 
-    class PhotoViewHolder(private val binding: ItemBinding):
+ inner class PhotoViewHolder(private val binding: ItemBinding):
         RecyclerView.ViewHolder (binding.root){
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if(item != null) {
+                        listener.onItemClick(item)
+                    }
+                }
+
+            }
+        }
 
         fun bind (photo: CatPhoto){
             binding.apply {
@@ -42,6 +55,9 @@ class CatAdapter:PagingDataAdapter <CatPhoto, CatAdapter.PhotoViewHolder> (PHOTO
 
         }
 
+    }
+    interface OnItemClickListener {
+        fun onItemClick(photo: CatPhoto)
     }
 
     companion object {
