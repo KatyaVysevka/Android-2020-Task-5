@@ -9,7 +9,6 @@ import com.example.task5.data.CatRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-
 @HiltViewModel
 class GalleryViewModel @Inject constructor(private val repository: CatRepository) : ViewModel() {
 //    private lateinit var allCats: LiveData<PagingData<CatPhoto>>
@@ -21,5 +20,4 @@ class GalleryViewModel @Inject constructor(private val repository: CatRepository
 //    }
     private val currentQuery = MutableLiveData<CatPhoto>()
     val photos = repository.getResults().cachedIn(viewModelScope)
-
 }

@@ -7,9 +7,8 @@ import com.example.task5.api.CatApi
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
-class CatRepository @Inject constructor (private val catApi: CatApi){
+class CatRepository @Inject constructor (private val catApi: CatApi) {
     fun getResults() =
         Pager(
             config = PagingConfig(
@@ -17,6 +16,6 @@ class CatRepository @Inject constructor (private val catApi: CatApi){
                 maxSize = 100,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = {CatPagingSource(catApi)}
+            pagingSourceFactory = { CatPagingSource(catApi) }
         ).liveData
 }

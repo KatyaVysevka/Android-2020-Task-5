@@ -11,10 +11,11 @@ import com.example.task5.R
 import com.example.task5.data.CatPhoto
 import com.example.task5.databinding.ItemBinding
 
-class CatAdapter(private val listener: OnItemClickListener):PagingDataAdapter <CatPhoto, CatAdapter.PhotoViewHolder> (PHOTO_COMPARATOR){
+class CatAdapter(private val listener: OnItemClickListener) : PagingDataAdapter <CatPhoto, CatAdapter.PhotoViewHolder> (PHOTO_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = ItemBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
+            LayoutInflater.from(parent.context), parent, false
+        )
 
         return PhotoViewHolder(binding)
     }
@@ -25,23 +26,22 @@ class CatAdapter(private val listener: OnItemClickListener):PagingDataAdapter <C
         if (currentItem != null) holder.bind(currentItem)
     }
 
- inner class PhotoViewHolder(private val binding: ItemBinding):
-        RecyclerView.ViewHolder (binding.root){
+    inner class PhotoViewHolder(private val binding: ItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
-                    if(item != null) {
+                    if (item != null) {
                         listener.onItemClick(item)
                     }
                 }
-
             }
         }
 
-        fun bind (photo: CatPhoto){
+        fun bind(photo: CatPhoto) {
             binding.apply {
                 Glide.with(itemView)
                     .load(photo.url)
@@ -52,16 +52,14 @@ class CatAdapter(private val listener: OnItemClickListener):PagingDataAdapter <C
 
                 textViewCat.text = photo.breeds.firstOrNull()?.name ?: "Lovely Cat"
             }
-
         }
-
     }
     interface OnItemClickListener {
         fun onItemClick(photo: CatPhoto)
     }
 
     companion object {
-        private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback <CatPhoto>(){
+        private val PHOTO_COMPARATOR = object : DiffUtil.ItemCallback <CatPhoto>() {
             override fun areItemsTheSame(oldItem: CatPhoto, newItem: CatPhoto): Boolean =
                 oldItem.id == newItem.id
 
@@ -69,9 +67,6 @@ class CatAdapter(private val listener: OnItemClickListener):PagingDataAdapter <C
                 oldItem: CatPhoto,
                 newItem: CatPhoto
             ): Boolean = oldItem == newItem
-
         }
     }
 }
-
-
