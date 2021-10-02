@@ -8,7 +8,8 @@
     <ImageView
         android:id="@+id/imageCat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:srcCompat="@drawable/ic_baseline_image_24" />
 
     <View
         android:layout_width="match_parent"
