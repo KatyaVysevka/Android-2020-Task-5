@@ -1,12 +1,17 @@
 package com.example.task5.fragments.detail
 
+import android.app.DownloadManager
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
@@ -20,6 +25,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.task5.R
+import com.example.task5.data.CatPhoto
 import com.example.task5.databinding.FragmentDetailBinding
 import java.util.jar.Manifest
 
@@ -70,13 +76,12 @@ class DetailFragment : Fragment() {
                     ): Boolean {
                         progressBar.isVisible = false
 
-                        //  textViewDescription.isVisible = photo != null
+
                         return false
                     }
                 })
                 .into(imageView)
 
-            //  textViewDescription.text = photo.description
 
 //            val uri = Uri.parse(photo.breeds.attributionUrl)
 //            val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -99,15 +104,24 @@ class DetailFragment : Fragment() {
         inflater.inflate(R.menu.save_menu, menu)
     }
 
-    //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        val photo = ags.detailPhoto
+//
 //        when (item.itemId) {
-//            R.id.menu_filter ->
-//                findNavController().navigate(R.id.action_listFragment_to_filterFragment)
-//            //       R.id.menu_sql -> mFilmViewModel
+//            R.id.save -> {
+//                val filename = photo.url.substringAfterLast("/")
+//                val request = DownloadManager.Request(Uri.parse(photo.url))
+//                    .setTitle(filename)
+//                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+//                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//                (context?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager)
+//                    .enqueue(request)
+//            }
 //        }
 //
 //        return super.onOptionsItemSelected(item)
 //    }
+
     private fun updateOrRequestPermissions() {
         val hasReadPermission = ContextCompat.checkSelfPermission(
             requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE
