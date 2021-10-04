@@ -14,7 +14,6 @@ class PhotoLoadStateAdapter(private val retry: () -> Unit) : LoadStateAdapter
         val binding = FooterBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-
         return LoadStateViewHolder(binding)
     }
 

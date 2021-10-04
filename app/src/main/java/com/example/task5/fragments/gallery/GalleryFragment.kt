@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.task5.R
 import com.example.task5.data.CatPhoto
 import com.example.task5.databinding.FragmentGalleryBinding
@@ -57,7 +58,15 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery), CatAdapter.OnItemCl
                 textViewError.isVisible = loadState.source.refresh is LoadState.Error
             }
         }
+
+        val swipe: SwipeRefreshLayout = binding.swipeRefresh
+        swipe.setOnRefreshListener {
+            adapter.retry()
+            adapter.notifyDataSetChanged()
+            swipe.isRefreshing = false
+        }
     }
+
     override fun onItemClick(photo: CatPhoto) {
         val action = GalleryFragmentDirections.actionGalleryFragmentToDetailFragment(photo)
         findNavController().navigate(action)
