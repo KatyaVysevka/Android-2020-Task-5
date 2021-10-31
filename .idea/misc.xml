@@ -12,10 +12,12 @@
         <entry key="..\:/java/projects/Android-2020-Task-5/app/src/main/res/layout/fragment_gallery.xml" value="0.228125" />
         <entry key="..\:/java/projects/Android-2020-Task-5/app/src/main/res/layout/item.xml" value="0.536" />
         <entry key="..\:/java/projects/Android-2020-Task-5/app/src/main/res/menu/save_menu.xml" value="0.2421875" />
+        <entry key="app/src/main/res/layout/footer.xml" value="0.11944444444444445" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.21002349853515628" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

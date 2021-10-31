@@ -1,10 +1,12 @@
 package com.example.task5.fragments.detail
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.DownloadManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -107,7 +109,6 @@ class DetailFragment : Fragment() {
     }
 
     private fun galleryAddPic(url: String) {
-
         val filename = url.substringAfterLast("/")
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle(filename)
@@ -118,18 +119,20 @@ class DetailFragment : Fragment() {
     }
 
     private fun checkWritePermission(): Boolean {
-
         return when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> true
             ContextCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                WRITE_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED -> {
                 true
             }
+            // Seems like there is no code for showing permission
+            // rationale: https://developer.android.com/training/permissions/requesting#manage-request-code-yourself
             else -> {
                 ActivityCompat.requestPermissions(
                     requireActivity(),
-                    arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    arrayOf(WRITE_EXTERNAL_STORAGE),
                     1
                 )
                 false

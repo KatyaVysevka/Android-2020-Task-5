@@ -12,6 +12,7 @@ class CatRepository @Inject constructor (private val catApi: CatApi) {
     fun getResults() =
         Pager(
             config = PagingConfig(
+                initialLoadSize = 20,
                 pageSize = 20,
                 maxSize = 100,
                 enablePlaceholders = false

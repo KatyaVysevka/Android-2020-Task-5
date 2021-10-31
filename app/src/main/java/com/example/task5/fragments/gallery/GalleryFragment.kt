@@ -14,7 +14,9 @@ import com.example.task5.R
 import com.example.task5.data.CatPhoto
 import com.example.task5.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@OptIn(InternalCoroutinesApi::class)
 @AndroidEntryPoint
 class GalleryFragment : Fragment(R.layout.fragment_gallery), CatAdapter.OnItemClickListener {
     private val viewModel by viewModels<GalleryViewModel>()
@@ -52,17 +54,16 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery), CatAdapter.OnItemCl
 
         adapter.addLoadStateListener { loadState ->
             binding.apply {
-                progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-                recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
-                buttonRetry.isVisible = loadState.source.refresh is LoadState.Error
-                textViewError.isVisible = loadState.source.refresh is LoadState.Error
+                progressBar.isVisible = loadState.refresh is LoadState.Loading
+                recyclerView.isVisible = loadState.refresh is LoadState.NotLoading
+                buttonRetry.isVisible = loadState.refresh is LoadState.Error
+                textViewError.isVisible = loadState.refresh is LoadState.Error
             }
         }
 
         val swipe: SwipeRefreshLayout = binding.swipeRefresh
         swipe.setOnRefreshListener {
-            adapter.retry()
-            adapter.notifyDataSetChanged()
+            adapter.refresh()
             swipe.isRefreshing = false
         }
     }
