@@ -1,22 +1,20 @@
-import kotlin.reflect.full.memberFunctions
-
 plugins {
-    id ("om.android.application")
+    id ("com.android.application")
     kotlin("android")
+    kotlin("android.extensions")
     kotlin("kapt")
-    kotlin ("kotlin-android-extensions")
     id ("androidx.navigation.safeargs.kotlin")
     id ("dagger.hilt.android.plugin")
     id ("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
-    compileSdkVersion (30)
+    compileSdk = 30
 
     defaultConfig {
         applicationId = "com.example.task5"
-        minSdk (21)
-        targetSdk (30)
+        minSdk = 21
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 
@@ -25,7 +23,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            minifyEnabled = false
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -42,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation ("androidx.core:core-ktx:1.6.0")
     implementation ("androidx.appcompat:appcompat:1.3.1")
