@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.task5.databinding.FooterBinding
 
 class PhotoLoadStateAdapter(private val retry: () -> Unit) : LoadStateAdapter
-    <PhotoLoadStateAdapter.LoadStateViewHolder>() {
+<PhotoLoadStateAdapter.LoadStateViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {
         val binding = FooterBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -37,6 +37,5 @@ class PhotoLoadStateAdapter(private val retry: () -> Unit) : LoadStateAdapter
                 textViewError.isVisible = loadState !is LoadState.Loading
             }
         }
-
     }
 }

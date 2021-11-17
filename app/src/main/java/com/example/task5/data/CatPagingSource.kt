@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.task5.api.CatApi
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -36,6 +37,6 @@ class CatPagingSource(private val catApi: CatApi) : PagingSource<Int, CatPhoto>(
     }
 
     override fun getRefreshKey(state: PagingState<Int, CatPhoto>): Int? {
-        TODO("Not yet implemented")
+        return null
     }
 }

@@ -10,5 +10,5 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(private val repository: CatRepository) : ViewModel() {
 
-     val photos = repository.getResults().cachedIn(viewModelScope)
+    val photos = repository.getResults().cachedIn(viewModelScope)
 }
